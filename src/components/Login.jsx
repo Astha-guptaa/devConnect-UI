@@ -1,15 +1,21 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../utils/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../utils/constants'
 
 const Login = () => {
   const [email, setEmail] = useState('astha@gmail.com')
   const [password, setPassword] = useState('Astha@123')
+  const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const userData = useSelector((store) => store.user)
+
+  if (userData) {
+    return <Navigate to='/' replace />
+  }
 
   const handleLogin = async () => {
     try {
@@ -24,7 +30,7 @@ const Login = () => {
       dispatch(addUser(res.data))
       navigate('/')
     } catch (err) {
-      console.error('ERROR : ', err.message)
+      setError(err?.response?.data || 'Something went wrong')
     }
   }
   return (
@@ -49,7 +55,7 @@ const Login = () => {
           placeholder='Password'
           onChange={(e) => setPassword(e.target.value)}
         />
-
+        <p className='text-xs text-red-600'>{error}</p>
         <button className='btn btn-neutral mt-4' onClick={handleLogin}>
           Login
         </button>

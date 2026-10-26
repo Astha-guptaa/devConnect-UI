@@ -1,17 +1,36 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { BASE_URL } from '../utils/constants'
+import axios from 'axios'
+import { removeUser } from '../utils/userSlice'
+import { removeFeed } from '../utils/feedSlice'
 
 const Navbar = () => {
   const user = useSelector((store) => store.user)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(BASE_URL + '/logout', {}, { withCredentials: true })
+      dispatch(removeUser())
+      dispatch(removeFeed())
+      navigate('/login')
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   return (
     <div className='navbar bg-base-content shadow-sm'>
       <div className='flex-1 mx-5'>
-        <a className='text-2xl text-base-100 font-bold'>Dev CONNECT</a>
+        <Link to='/' className='text-2xl text-base-100 font-bold'>
+          Dev CONNECT
+        </Link>
       </div>
       {user && (
         <div className='flex gap-2 items-center'>
-          <div className='text-black font-bold'>
-            Welcome {user.firstName} !
-          </div>
+          <div className='text-black font-bold'>Welcome {user.firstName} !</div>
           <div className='dropdown dropdown-end'>
             <div
               tabIndex={0}
@@ -27,16 +46,18 @@ const Navbar = () => {
               className='menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow'
             >
               <li>
-                <a className='justify-between'>
+                <Link to='/profile' className='justify-between'>
                   Profile
                   <span className='badge'>New</span>
-                </a>
+                </Link>
               </li>
               <li>
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <Link to='/logout' onClick={handleLogout}>
+                  Logout
+                </Link>
               </li>
             </ul>
           </div>
