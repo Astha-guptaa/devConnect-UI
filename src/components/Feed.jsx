@@ -25,7 +25,7 @@ const Feed = () => {
   }, [])
   if(!feed) return;
 
-  if(!feed.data.length) return <h1>No record Found</h1>
+  if(!feed.data.length) return <h1 className='flex justify-center my-10'>No record Found</h1>
   
   return (
     feed && (

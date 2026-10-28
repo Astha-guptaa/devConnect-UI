@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { addUser } from '../utils/userSlice'
 
 const EditProfile = ({ user }) => {
-  const [firstName, setFirstName] = useState(user.firstName || '')
+  const [firstName, setFirstName] = useState(user.firstName)
   const [lastName, setLastName] = useState(user.lastName || '')
   const [age, setAge] = useState(user.age || '')
   const [gender, setGender] = useState(user.gender || '')
@@ -25,7 +25,7 @@ const EditProfile = ({ user }) => {
         { firstName, lastName, age, gender, about, photoUrl },
         { withCredentials: true },
       )
-      dispatch(addUser(res.data))
+      dispatch(addUser(res.data.data))
       setSuccess(true)
       setTimeout(() => {
         setSuccess(false)
