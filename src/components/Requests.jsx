@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
@@ -39,7 +39,7 @@ const Requests = () => {
   if (!requests) return
 
   if (!requests.data?.length)
-    return <h1 className='flex justify-center my-10'>{requests.message}</h1>
+    return <h1 className='flex justify-center my-10'>No Records Found</h1>
 
   return (
     <div className='text-center my-7'>
