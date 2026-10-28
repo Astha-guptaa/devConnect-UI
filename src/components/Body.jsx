@@ -34,9 +34,11 @@ const Body = () => {
 
   return (
     <div className='flex h-screen flex-col overflow-hidden'>
+      <div className='shrink-0'>
         <Navbar />
-      <main className='min-h-0 flex-1 overflow-y-auto'>
-        <Outlet />
+      </div>
+      <main className='flex min-h-0 flex-1 flex-col overflow-y-auto'>
+          <Outlet />
         <Footer />
       </main>
     </div>
