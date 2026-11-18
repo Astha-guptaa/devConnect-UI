@@ -3,6 +3,7 @@ import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnection } from '../utils/connectionSlice'
+import { Link } from 'react-router-dom'
 
 const Connections = () => {
   const connections = useSelector((store) => store.connection)
@@ -50,6 +51,11 @@ const Connections = () => {
               )}
               <p>{about}</p>
             </div>
+            <Link to={`/chat/${_id}`} className='ml-auto items-center flex'>
+              <button className='btn btn-sm btn-primary'>
+                Message
+              </button>
+            </Link>
           </div>
         )
       })}
