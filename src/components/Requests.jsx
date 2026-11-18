@@ -23,6 +23,9 @@ const Requests = () => {
     getRequests()
   }, [])
 
+  const validRequests =
+    requests?.data?.filter((request) => request?.fromUserId) ?? []
+
   const reviewRequest = async (status, _id) => {
     try {
       await axios.post(
@@ -38,13 +41,13 @@ const Requests = () => {
 
   if (!requests) return
 
-  if (!requests.data?.length)
+  if (!validRequests.length)
     return <h1 className='flex justify-center my-10'>No Records Found</h1>
 
   return (
     <div className='text-center my-7'>
       <h1 className='text-bold text-3xl'>Requests</h1>
-      {requests?.data?.map((request) => {
+      {validRequests.map((request) => {
         const { _id, firstName, lastName, age, gender, about, photoUrl } =
           request.fromUserId
         return (
